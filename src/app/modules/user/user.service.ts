@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from 'http-status';
+import ApiError from '../../../errors/ApiError';
 import { IUser } from './user.interface';
 import { User } from './user.model';
 
@@ -34,4 +36,18 @@ const updateUser = async (
   return result;
 };
 
-export const UserService = { getAllUsers, getSingleUser, updateUser };
+const deleteUser = async (id: string): Promise<IUser | null> => {
+  const result = await User.findByIdAndDelete(id);
+  if (!result) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'User Not Found!');
+  }
+
+  return result;
+};
+
+export const UserService = {
+  getAllUsers,
+  getSingleUser,
+  updateUser,
+  deleteUser,
+};
