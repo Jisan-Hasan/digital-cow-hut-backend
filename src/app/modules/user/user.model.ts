@@ -29,6 +29,7 @@ export const UserSchema = new Schema<IUser, UserModel>(
     phoneNumber: {
       type: String,
       required: true,
+      unique: true,
     },
     address: {
       type: String,
