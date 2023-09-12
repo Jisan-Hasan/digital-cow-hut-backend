@@ -1,4 +1,6 @@
+import httpStatus from 'http-status';
 import { SortOrder } from 'mongoose';
+import ApiError from '../../../errors/ApiError';
 import { PaginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -67,8 +69,6 @@ const getAllCows = async (
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  // console.log(whereConditions);
-
   const result = await Cow.find(whereConditions)
     .populate('seller')
     .sort(sortConditions)
@@ -87,8 +87,19 @@ const getAllCows = async (
   };
 };
 
+const deleteCow = async (id: string): Promise<ICow | null> => {
+  const result = await Cow.findByIdAndDelete(id);
+
+  if (!result) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Cow not found');
+  }
+
+  return result;
+};
+
 export const CowService = {
   createCow,
   getSingleCow,
   getAllCows,
+  deleteCow,
 };
