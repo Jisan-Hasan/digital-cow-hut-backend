@@ -47,7 +47,7 @@ const getAllCows = async (
   if (Object.keys(filtersData).length) {
     andConditions.push({
       $and: Object.entries(filtersData).map(([field, value]) => ({
-        [field]: value,
+        [field]: { $regex: new RegExp(`^${value}$`, 'i') },
       })),
     });
   }
