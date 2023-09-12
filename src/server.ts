@@ -3,11 +3,10 @@ import { Server } from 'http';
 import mongoose from 'mongoose';
 import app from './app';
 import config from './config';
-import { errorLogger, logger } from './shared/logger';
 
 let server: Server;
 process.on('uncaughtException', error => {
-  errorLogger.error(error);
+  console.error(error);
   process.exit(1);
 });
 
@@ -29,7 +28,7 @@ async function boostrap() {
   process.on('unhandledRejection', error => {
     if (server) {
       server.close(() => {
-        errorLogger.error(error);
+        console.error(error);
         process.exit(1);
       });
     } else {
@@ -41,7 +40,7 @@ async function boostrap() {
 boostrap();
 
 process.on('SIGTERM', () => {
-  logger.info('SIGTERM is received');
+  console.info('SIGTERM is received');
   if (server) {
     server.close();
   }
