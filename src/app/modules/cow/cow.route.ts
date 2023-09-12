@@ -12,5 +12,6 @@ router.post(
 );
 
 router.get('/:id', CowController.getSingleCow);
+router.get('/', CowController.getAllCows);
 
 export const CowRoutes = router;

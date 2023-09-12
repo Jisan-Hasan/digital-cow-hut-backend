@@ -22,3 +22,13 @@ export const breed = [
 export const label = ['for sale', 'sold out'];
 
 export const category = ['Dairy', 'Beef', 'Dual Purpose'];
+
+export const cowSearchableFields = ['name', 'location', 'breed', 'category'];
+
+export const cowFilterableFields = [
+  'searchTerm',
+  'name',
+  'location',
+  'breed',
+  'category',
+];
