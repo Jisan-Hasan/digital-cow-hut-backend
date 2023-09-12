@@ -63,7 +63,7 @@ const updateCow: RequestHandler = catchAsync(
     sendResponse<ICow>(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Cows updated successfully',
+      message: 'Cow updated successfully',
       data: result,
     });
   },
@@ -76,7 +76,7 @@ const deleteCow: RequestHandler = catchAsync(
     sendResponse<ICow>(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Cows deleted successfully',
+      message: 'Cow deleted successfully',
       data: result,
     });
   },

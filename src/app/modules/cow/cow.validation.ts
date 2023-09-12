@@ -13,9 +13,7 @@ const createCowZodSchema = z.object({
       required_error: 'Breed is required',
     }),
     weight: z.number({ required_error: 'Weight is required' }),
-    label: z.enum([...label] as [string, ...string[]], {
-      required_error: 'Label is required',
-    }),
+    label: z.enum([...label] as [string, ...string[]]).optional(),
     category: z.enum([...category] as [string, ...string[]], {
       required_error: 'Category is required',
     }),
