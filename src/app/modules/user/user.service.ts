@@ -13,6 +13,13 @@ const getAllUsers = async (): Promise<IUser[]> => {
 const getSingleUser = async (id: string): Promise<IUser | null> => {
   const result = await User.findById(id);
 
+  if (!result) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Didn't find any user with this id",
+    );
+  }
+
   return result;
 };
 
