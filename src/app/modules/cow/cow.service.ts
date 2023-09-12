@@ -87,8 +87,19 @@ const getAllCows = async (
   };
 };
 
+const updateCow = async (
+  id: string,
+  payload: Partial<ICow>,
+): Promise<ICow | null> => {
+  const result = await Cow.findByIdAndUpdate(id, payload, {
+    new: true,
+  }).populate('seller');
+
+  return result;
+};
+
 const deleteCow = async (id: string): Promise<ICow | null> => {
-  const result = await Cow.findByIdAndDelete(id);
+  const result = await Cow.findByIdAndDelete(id).populate('seller');
 
   if (!result) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Cow not found');
@@ -101,5 +112,6 @@ export const CowService = {
   createCow,
   getSingleCow,
   getAllCows,
+  updateCow,
   deleteCow,
 };
