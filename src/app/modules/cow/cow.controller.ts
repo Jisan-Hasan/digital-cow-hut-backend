@@ -18,6 +18,20 @@ const createCow: RequestHandler = catchAsync(
   },
 );
 
+const getSingleCow: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await CowService.getSingleCow(req.params.id);
+
+    sendResponse<ICow>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Cow retrieved successfully',
+      data: result,
+    });
+  },
+);
+
 export const CowController = {
   createCow,
+  getSingleCow,
 };

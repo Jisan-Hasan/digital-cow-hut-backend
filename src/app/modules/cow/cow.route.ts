@@ -11,4 +11,6 @@ router.post(
   CowController.createCow,
 );
 
+router.get('/:id', CowController.getSingleCow);
+
 export const CowRoutes = router;
