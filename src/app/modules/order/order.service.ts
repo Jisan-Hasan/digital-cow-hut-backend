@@ -6,7 +6,7 @@ import { User } from '../user/user.model';
 import { IOrder } from './order.interface';
 import { Order } from './order.model';
 
-const createOrder = async (payload: IOrder) => {
+const createOrder = async (payload: IOrder): Promise<IOrder> => {
   const buyer = await User.findById(payload.buyer);
   const cow = await Cow.findById(payload.cow);
 
@@ -82,7 +82,7 @@ const createOrder = async (payload: IOrder) => {
     }
 
     const order = await Order.create([payload], { session });
-    if (!order) {
+    if (!order.length) {
       throw new ApiError(
         httpStatus.BAD_REQUEST,
         'Order creation failed! Try again',
@@ -92,7 +92,7 @@ const createOrder = async (payload: IOrder) => {
     await session.commitTransaction();
     await session.endSession();
 
-    return order;
+    return order[0];
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
@@ -100,6 +100,13 @@ const createOrder = async (payload: IOrder) => {
   }
 };
 
+const getAllOrders = async (): Promise<IOrder[]> => {
+  const result = await Order.find({}).populate('cow').populate('buyer');
+
+  return result;
+};
+
 export const OrderService = {
   createOrder,
+  getAllOrders,
 };
